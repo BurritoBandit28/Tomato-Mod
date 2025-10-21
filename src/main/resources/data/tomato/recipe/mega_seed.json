@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#P#",
+    "###"
+  ],
+  "key": {
+    "#": "minecraft:bone_block",
+    "P": "tomato:tomato_seeds"
+  },
+  "result": {
+    "id": "tomato:tomato_mega_seeds",
+    "count": 1
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "tomato:carved_tomato_block",
+    "minecraft:copper_torch"
+  ],
+  "result": {
+    "id": "tomato:lit_carved_tomato_block",
+    "count": 1
+  }
+}
