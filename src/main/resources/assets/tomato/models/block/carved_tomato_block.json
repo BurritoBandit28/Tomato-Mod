@@ -1,7 +1,6 @@
 {
 	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
-	"parent": "block/cube_column",
 	"textures": {
 		"2": "tomato:block/tomato_leaves",
 		"3": "tomato:block/tomato_block_top",

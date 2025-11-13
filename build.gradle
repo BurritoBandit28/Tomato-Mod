@@ -19,7 +19,9 @@ repositories {
     // for more information about repositories.
     maven { url 'https://maven.nucleoid.xyz' } // You should have it
 }
-
+loom {
+    accessWidenerPath = file("src/main/resources/tomato.accesswidener")
+}
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"

@@ -1,0 +1,2 @@
+accessWidener v2 named
+accessible    method    net/minecraft/entity/EntityType    register    (Lnet/minecraft/registry/RegistryKey;Lnet/minecraft/entity/EntityType$Builder;)Lnet/minecraft/entity/EntityType;

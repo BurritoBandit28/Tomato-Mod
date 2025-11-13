@@ -4,5 +4,6 @@
   "item.tomato.tomato_mega_seeds" : "Tomato Mega Seed",
   "block.tomato.tomato_block" : "Large Tomato",
   "block.tomato.carved_tomato_block" : "Carved Large Tomato",
-  "block.tomato.lit_carved_tomato_block" : "Lit Carved Large Tomato"
+  "block.tomato.lit_carved_tomato_block" : "Lit Carved Large Tomato",
+  "tomato.sound.tomato_splat": "Tomato Splats"
 }
