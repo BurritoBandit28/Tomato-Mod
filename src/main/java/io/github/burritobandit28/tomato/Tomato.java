@@ -7,7 +7,9 @@ import io.github.burritobandit28.tomato.item.ItemRegister;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.impl.object.builder.TradeOfferInternals;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -26,14 +28,7 @@ public class Tomato implements ModInitializer {
 
     public static final SoundEvent TOMATO_SPLAT = of("tomato_splat");
 
-    public static final RegistryKey<DamageType> TOMATOED = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(MOD_ID,"tomatoed"));
-
-
-    public static DamageSource YgetTomatoedDamageSource(ServerWorld world) {
-
-        return new DamageSource(world.getRegistryManager().getEntryOrThrow(TOMATOED));
-
-    }
+    public static final RegistryKey<DamageType> TOMATO_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(MOD_ID, "tomato"));
 
     static SoundEvent of(String path) {
         var obj = SoundEvent.of(Identifier.of(MOD_ID, path));
@@ -60,4 +55,11 @@ public class Tomato implements ModInitializer {
             factory.addAll(Identifier.of(MOD_ID,"tomato_seeds"), tfactory);
         });
     }
+
+    public static DamageSource getTomatoDamage(ServerWorld world, Entity attacler) {
+
+        return new DamageSource(world.getRegistryManager().getEntryOrThrow(TOMATO_DAMAGE), attacler);
+
+    }
+
 }

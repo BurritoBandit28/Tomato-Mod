@@ -5,10 +5,13 @@ import io.github.burritobandit28.tomato.item.ItemRegister;
 import io.github.burritobandit28.tomato.item.TomatoItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.entity.projectile.thrown.SnowballEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.SnowballItem;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.command.DamageCommand;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -35,10 +38,13 @@ public abstract class SnowballEntityMixin extends ThrownItemEntity  {
 
         if (this.getStack().getItem() == ItemRegister.tomato) {
 
+
             super.onEntityHit(entityHitResult);
+
             Entity entity = entityHitResult.getEntity();
-            DamageCommand
-            entity.serverDamage(Tomato.getTomatoedDamageSource(this, this.getOwner()), (float)2);
+            ServerWorld world = (ServerWorld) this.getEntityWorld();
+
+            entity.damage(world, Tomato.getTomatoDamage(world, this.getOwner()), 2f);
             ci.cancel();
         }
 
