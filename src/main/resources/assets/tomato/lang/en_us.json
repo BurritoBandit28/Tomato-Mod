@@ -6,5 +6,6 @@
   "block.tomato.carved_tomato_block" : "Carved Large Tomato",
   "block.tomato.lit_carved_tomato_block" : "Lit Carved Large Tomato",
   "tomato.sound.tomato_splat": "Tomato Splats",
-  "death.attack.tomato_hurt": "%1$s was shamed to death by %2$s"
+  "death.attack.tomato_hurt": "%1$s was shamed to death by %2$s",
+  "death.attack.tomato_hurt.item" : "%1$s had %3$s thrown at them by %2$s"
 }
