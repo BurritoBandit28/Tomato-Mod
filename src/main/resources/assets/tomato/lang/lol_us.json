@@ -1,0 +1,13 @@
+{
+  "item.tomato.tomato" : "Tomat",
+  "block.tomato.small_tomato_plant" : "Tomat sed",
+  "block.tomato.tomato_stem" : "SUPA MEGA ULTWA TOMAT SED",
+  "block.tomato.tomato_block" : "BIG Tomat",
+  "block.tomato.carved_tomato_block" : "Scawy Tomat",
+  "block.tomato.lit_carved_tomato_block" : "bwight scawy big Tomat",
+  "tomato.sound.tomato_splat": "Tomat Splat",
+  "death.attack.tomato_hurt": "%1$s got tomatted by %2$s",
+  "death.attack.tomato_hurt.item" : "%1$s had %3$s thwown at dem by %2$s",
+  "itemGroup.tomato" : "Tomat Mod",
+  "entity.tomato.tomato" : "Tomat"
+}
