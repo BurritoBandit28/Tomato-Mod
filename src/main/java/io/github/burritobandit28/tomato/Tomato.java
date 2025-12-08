@@ -82,11 +82,14 @@ public class Tomato implements ModInitializer {
             }
         });
 
+
         CompostingChanceRegistry.INSTANCE.add(ItemRegister.tomato_seeds, 0.3f);
-        CompostingChanceRegistry.INSTANCE.add(ItemRegister.tomato_mega_seeds, 0.4f);
+        CompostingChanceRegistry.INSTANCE.add(ItemRegister.tomato_mega_seeds, 0.3f);
         CompostingChanceRegistry.INSTANCE.add(ItemRegister.tomato, 0.65f);
         CompostingChanceRegistry.INSTANCE.add(ItemRegister.tomato_block, 0.65f);
         CompostingChanceRegistry.INSTANCE.add(ItemRegister.carved_tomato_block, 0.65f);
+
+
 
     }
 

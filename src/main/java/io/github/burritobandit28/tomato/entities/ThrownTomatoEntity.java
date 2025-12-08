@@ -55,12 +55,20 @@ public class ThrownTomatoEntity extends ThrownItemEntity {
         World world = this.getEntityWorld();
         world.playSound((PlayerEntity) null, this.getX(), this.getY(), this.getZ(), Tomato.TOMATO_SPLAT, SoundCategory.NEUTRAL, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
         if (!this.getWorld().isClient()) {
-            Vec3d hitPos= hitResult.getPos();
+
 
             Vec3d vel  = this.getVelocity();
             ServerWorld sw = (ServerWorld) this.getWorld();
-            sw.spawnParticles(Tomato.TOMATO_SPLAT_PARTICLE, hitPos.x-(Tomato.posOrNeg(vel.x)*0.2), hitPos.y-(Tomato.posOrNeg(vel.y)*0.2), hitPos.z-(Tomato.posOrNeg(vel.z)*0.2), 1, 0, 0, 0, 0);
 
+            if (hitResult instanceof EntityHitResult entityHitResult) {
+                Entity entity = entityHitResult.getEntity();
+                Vec3d hitpos = entity.getEyePos();
+                sw.spawnParticles(Tomato.TOMATO_SPLAT_PARTICLE, hitpos.x, hitpos.y, hitpos.z, 1, 0, 0, 0, 0);
+            }
+            else {
+                Vec3d hitPos= hitResult.getPos();
+                sw.spawnParticles(Tomato.TOMATO_SPLAT_PARTICLE, hitPos.x - (Tomato.posOrNeg(vel.x) * 0.2), hitPos.y - (Tomato.posOrNeg(vel.y) * 0.2), hitPos.z - (Tomato.posOrNeg(vel.z) * 0.2), 1, 0, 0, 0, 0);
+            }
             this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
             this.discard();
         }
