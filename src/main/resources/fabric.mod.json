@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "tomato",
+  "version": "${version}",
+  "name": "Tomato Mod",
+  "description": "Adds Tomatoes wow",
+  "authors": ["BurritoBandit28"],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/tomato/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "io.github.burritobandit28.tomato.client.TomatoClient"
+    ],
+    "main": [
+      "io.github.burritobandit28.tomato.Tomato"
+    ]
+  },
+  "mixins": [
+    "tomato.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.17.0",
+    "fabric": "0.115.6+1.21.1",
+    "minecraft": "1.21.1"
+  }
+}

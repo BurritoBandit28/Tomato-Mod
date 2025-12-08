@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "tomato:item/carved_tomato_block"
+  }
+}

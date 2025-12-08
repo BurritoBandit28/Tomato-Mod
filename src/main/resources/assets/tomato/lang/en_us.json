@@ -1,0 +1,13 @@
+{
+  "item.tomato.tomato" : "Tomato",
+  "block.tomato.small_tomato_plant" : "Tomato Seeds",
+  "block.tomato.tomato_stem" : "Tomato Mega Seed",
+  "block.tomato.tomato_block" : "Large Tomato",
+  "block.tomato.carved_tomato_block" : "Carved Large Tomato",
+  "block.tomato.lit_carved_tomato_block" : "Lit Carved Large Tomato",
+  "tomato.sound.tomato_splat": "Tomato Splats",
+  "death.attack.tomato_hurt": "%1$s was shamed to death by %2$s",
+  "death.attack.tomato_hurt.item" : "%1$s had %3$s thrown at them by %2$s",
+  "itemGroup.tomato" : "Tomato Mod",
+  "entity.tomato.tomato" : "Tomato"
+}

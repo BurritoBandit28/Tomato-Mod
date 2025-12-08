@@ -1,0 +1,8 @@
+{
+  "tomato_splat" : {
+    "subtitle": "tomato.sound.tomato_splat",
+    "sounds" : [
+      "tomato:splat"
+    ]
+  }
+}

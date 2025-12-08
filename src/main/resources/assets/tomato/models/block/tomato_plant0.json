@@ -1,0 +1,7 @@
+{
+  "parent": "tomato:block/parent_plant",
+  "textures": {
+    "0": "tomato:block/tomato_plant0",
+    "particle": "tomato:block/tomato_plant0"
+  }
+}
