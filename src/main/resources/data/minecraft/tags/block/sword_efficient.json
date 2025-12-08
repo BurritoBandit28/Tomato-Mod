@@ -1,0 +1,8 @@
+{
+  "values": [
+    "tomato:tomato_block",
+    "tomato:carved_tomato_block",
+    "tomato:lit_carved_tomato_block"
+  ],
+  "replace": false
+}

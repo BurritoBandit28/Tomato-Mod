@@ -1,0 +1,13 @@
+{
+  "item.tomato.tomato" : "oʇɐɯo⟘",
+  "block.tomato.small_tomato_plant" : "spǝǝS oʇɐɯo⟘",
+  "block.tomato.tomato_stem" : "pǝǝS ɐᵷǝW oʇɐɯo⟘",
+  "block.tomato.tomato_block" : "oʇɐɯo⟘ ǝᵷɹɐꞀ",
+  "block.tomato.carved_tomato_block" : "oʇɐɯo⟘ ǝᵷɹɐꞀ pǝʌɹɐƆ",
+  "block.tomato.lit_carved_tomato_block" : "oʇɐɯo⟘ ǝᵷɹɐꞀ pǝʌɹɐƆ ʇᴉꞀ",
+  "tomato.sound.tomato_splat": "sʇɐꞁdS oʇɐɯo⟘",
+  "death.attack.tomato_hurt": "%2$s ʎq ɥʇɐǝp oʇ pǝɯɐɥs sɐʍ %1$s",
+  "death.attack.tomato_hurt.item" : "%2$s ʎq ɯǝɥʇ ʇɐ uʍoɹɥʇ %3$s pɐɥ %1$s",
+  "itemGroup.tomato" : "poW oʇɐɯo⟘",
+  "entity.tomato.tomato" : "oʇɐɯo⟘"
+}

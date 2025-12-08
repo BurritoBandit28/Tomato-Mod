@@ -1,13 +1,18 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item":"tomato:carved_tomato_block"
-    },
-    {
-      "item":"minecraft:torch"
-    }
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "A",
+    "B"
   ],
+  "key": {
+    "A": {
+      "item": "tomato:carved_tomato_block"
+    },
+    "B": {
+      "item": "minecraft:torch"
+    }
+  },
   "result": {
     "id": "tomato:lit_carved_tomato_block",
     "count": 1
