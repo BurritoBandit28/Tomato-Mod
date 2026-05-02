@@ -3,6 +3,8 @@ package io.github.burritobandit28.tomato.block;
 import com.mojang.serialization.MapCodec;
 import io.github.burritobandit28.tomato.Tomato;
 import io.github.burritobandit28.tomato.item.ItemRegister;
+import net.minecraft.block.BeetrootsBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,6 +14,9 @@ import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.IntProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
@@ -20,7 +25,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class SmallTomatoPlant extends CropBlock {
-
     public static final MapCodec<SmallTomatoPlant> CODEC = createCodec(SmallTomatoPlant::new);
 
     @Override

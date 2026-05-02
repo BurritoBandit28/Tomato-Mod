@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.particle.EndRodParticle;
 import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.SpellParticle;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 
@@ -19,6 +20,8 @@ public class TomatoClient implements ClientModInitializer {
     public void onInitializeClient() {
 
         ParticleFactoryRegistry.getInstance().register(Tomato.TOMATO_SPLAT_PARTICLE, TomatoSplatParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(Tomato.GOLDEN_TOMATO_SPLAT_PARTICLE, TomatoSplatParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(Tomato.SPLATTED_EFFECT_PARTICLE, SpellParticle.DefaultFactory::new);
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegister.SMALL_TOMATO_PLANT,RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegister.TOMATO_STEM,RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegister.ATTACHED_TOMATO_STEM,RenderLayer.getCutout());

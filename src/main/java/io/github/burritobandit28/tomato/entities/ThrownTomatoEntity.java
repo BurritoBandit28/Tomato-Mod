@@ -1,15 +1,19 @@
 package io.github.burritobandit28.tomato.entities;
 
 import io.github.burritobandit28.tomato.Tomato;
+import io.github.burritobandit28.tomato.client.TomatoSplatParticle;
+import io.github.burritobandit28.tomato.effect.SplattedEffect;
 import io.github.burritobandit28.tomato.item.ItemRegister;
 import net.minecraft.block.EndRodBlock;
 import net.minecraft.entity.*;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.SnowballEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.server.command.ParticleCommand;
@@ -34,6 +38,18 @@ public class ThrownTomatoEntity extends ThrownItemEntity {
         super(tomato, x, y, z, world);
     }
 
+    public ThrownTomatoEntity(EntityType<? extends ThrownItemEntity> type, double x, double y, double z, World world) {
+        super(type, x, y, z, world);
+    }
+
+    public ThrownTomatoEntity(EntityType<? extends ThrownItemEntity> type, LivingEntity owner, World world) {
+        super(type, owner, world);
+    }
+
+    public float getDamage() {
+        return 2f;
+    }
+
     @Override
     protected Item getDefaultItem() {
         return ItemRegister.tomato;
@@ -45,8 +61,10 @@ public class ThrownTomatoEntity extends ThrownItemEntity {
         Entity entity = entityHitResult.getEntity();
         if (!this.getWorld().isClient()) {
             ServerWorld world = (ServerWorld) this.getEntityWorld();
-
-            entity.damage(Tomato.getTomatoDamage(world, this.getOwner()), 2f);
+            if (entity instanceof LivingEntity livingEntity) {
+                livingEntity.damage(Tomato.getTomatoDamage(world, this.getOwner()), this.getDamage());
+                livingEntity.addStatusEffect(new StatusEffectInstance(SplattedEffect.SPLATTED_EFFECT, 100), this.getOwner());
+            }
         }
     }
     @Override
@@ -60,14 +78,9 @@ public class ThrownTomatoEntity extends ThrownItemEntity {
             Vec3d vel  = this.getVelocity();
             ServerWorld sw = (ServerWorld) this.getWorld();
 
-            if (hitResult instanceof EntityHitResult entityHitResult) {
-                Entity entity = entityHitResult.getEntity();
-                Vec3d hitpos = entity.getEyePos();
-                sw.spawnParticles(Tomato.TOMATO_SPLAT_PARTICLE, hitpos.x, hitpos.y, hitpos.z, 1, 0, 0, 0, 0);
-            }
-            else {
+            if (!(hitResult instanceof EntityHitResult)) {
                 Vec3d hitPos= hitResult.getPos();
-                sw.spawnParticles(Tomato.TOMATO_SPLAT_PARTICLE, hitPos.x - (Tomato.posOrNeg(vel.x) * 0.2), hitPos.y - (Tomato.posOrNeg(vel.y) * 0.2), hitPos.z - (Tomato.posOrNeg(vel.z) * 0.2), 1, 0, 0, 0, 0);
+                sw.spawnParticles(this.getParticle(), hitPos.x - (Tomato.posOrNeg(vel.x) * 0.2), hitPos.y - (Tomato.posOrNeg(vel.y) * 0.2), hitPos.z - (Tomato.posOrNeg(vel.z) * 0.2), 0, 0, -0.01, 0, 1);
             }
             this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
             this.discard();
@@ -82,6 +95,10 @@ public class ThrownTomatoEntity extends ThrownItemEntity {
 
     private static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> type) {
         return Registry.register(Registries.ENTITY_TYPE, Tomato.ID(id), type.build(id));
+    }
+
+    public SimpleParticleType getParticle() {
+        return Tomato.TOMATO_SPLAT_PARTICLE;
     }
 
     public static void init(){}

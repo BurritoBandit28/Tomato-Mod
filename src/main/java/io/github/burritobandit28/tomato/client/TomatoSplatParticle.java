@@ -6,10 +6,10 @@ import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
 
-public class TomatoSplatParticle extends AnimatedParticle {
+public class TomatoSplatParticle extends SpriteBillboardParticle {
 
     protected TomatoSplatParticle(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, SpriteProvider spriteProvider) {
-        super(world, x, y, z, spriteProvider, 0.00625F);
+        super(world, x, y, z);
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.velocityZ = velocityZ;
@@ -41,6 +41,19 @@ public class TomatoSplatParticle extends AnimatedParticle {
     public Particle scale(float scale) {
 
         return this;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.age > this.maxAge / 2) {
+            this.setAlpha(.5F);
+        }
+    }
+
+    @Override
+    public ParticleTextureSheet getType() {
+        return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;
     }
 
 }

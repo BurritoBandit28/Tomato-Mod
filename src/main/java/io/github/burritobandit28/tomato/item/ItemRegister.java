@@ -6,6 +6,8 @@ import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.type.FoodComponent;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -21,6 +23,13 @@ public class ItemRegister {
             new Item.Settings()
             .food(new FoodComponent.Builder().nutrition(2).saturationModifier(1.0F).build())
             );
+
+    // todo: add unique status effect
+    public static final Item golden_tomato = new GoldenTomatoItem(
+            new Item.Settings()
+                    .food(new FoodComponent.Builder().nutrition(4).saturationModifier(2.0F).statusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 600), 1f).build())
+    );
+
     public static final Item tomato_seeds = new BlockItem(BlockRegister.SMALL_TOMATO_PLANT,new Item.Settings());
     public static final Item tomato_mega_seeds = new BlockItem(BlockRegister.TOMATO_STEM,new Item.Settings());
     public static final Item tomato_block = new BlockItem(BlockRegister.TOMATO_BLOCK,new Item.Settings());
@@ -40,12 +49,14 @@ public class ItemRegister {
         Registry.register(Registries.ITEM, Tomato.ID("tomato_block"), tomato_block);
         Registry.register(Registries.ITEM, Tomato.ID("carved_tomato_block"), carved_tomato_block);
         Registry.register(Registries.ITEM, Tomato.ID("lit_carved_tomato_block"), lit_carved_tomato_block);
+        Registry.register(Registries.ITEM, Tomato.ID("golden_tomato"), golden_tomato);
 
         Registry.register(Registries.ITEM_GROUP, TOMATO_GROUP_KEY, TOMATO_GROUP);
 
         ItemGroupEvents.modifyEntriesEvent(TOMATO_GROUP_KEY).register(itemGroup -> {
             itemGroup.add(tomato_seeds);
             itemGroup.add(tomato);
+            itemGroup.add(golden_tomato);
             itemGroup.add(tomato_mega_seeds);
             itemGroup.add(tomato_block);
             itemGroup.add(carved_tomato_block);

@@ -1,6 +1,8 @@
 package io.github.burritobandit28.tomato;
 
 import io.github.burritobandit28.tomato.block.BlockRegister;
+import io.github.burritobandit28.tomato.effect.SplattedEffect;
+import io.github.burritobandit28.tomato.entities.ThrownGoldenTomatoEntity;
 import io.github.burritobandit28.tomato.entities.ThrownTomatoEntity;
 import io.github.burritobandit28.tomato.item.ItemRegister;
 import net.fabricmc.api.ModInitializer;
@@ -58,18 +60,23 @@ public class Tomato implements ModInitializer {
     }
 
     public static final SimpleParticleType TOMATO_SPLAT_PARTICLE = FabricParticleTypes.simple();
+    public static final SimpleParticleType GOLDEN_TOMATO_SPLAT_PARTICLE = FabricParticleTypes.simple();
+    public static final SimpleParticleType SPLATTED_EFFECT_PARTICLE = FabricParticleTypes.simple();
 
     @Override
     public void onInitialize() {
 
         LOGGER.info("Loading the Tomato Mod!");
         Registry.register(Registries.PARTICLE_TYPE, ID("tomato_splat_particle"), TOMATO_SPLAT_PARTICLE);
+        Registry.register(Registries.PARTICLE_TYPE, ID("golden_tomato_splat_particle"), GOLDEN_TOMATO_SPLAT_PARTICLE);
+        Registry.register(Registries.PARTICLE_TYPE, ID("tomato_splat_effect_particle"), SPLATTED_EFFECT_PARTICLE);
 
 
         ItemRegister.init();
         BlockRegister.init();
-
+        SplattedEffect.init();
         ThrownTomatoEntity.init();
+        ThrownGoldenTomatoEntity.init();
 
         DispenserBlock.registerProjectileBehavior(ItemRegister.tomato);
         DispenserBlock.registerBehavior(BlockRegister.CARVED_TOMATO_BLOCK, new FallibleItemDispenserBehavior() {

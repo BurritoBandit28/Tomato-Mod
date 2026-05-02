@@ -45,12 +45,7 @@ public class TomatoItem extends Item implements ProjectileItem {
                     0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F)
             );
             if (!world.isClient) {
-                ThrownTomatoEntity tomato = new ThrownTomatoEntity(world, user);
-                tomato.setItem(itemStack);
-                tomato.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 1.5F, 1.0F);
-                world.spawnEntity(tomato);
-                user.incrementStat(Stats.USED.getOrCreateStat(this));
-                itemStack.decrementUnlessCreative(1, user);
+                throwTomato(world, user, itemStack);
                 return TypedActionResult.success(itemStack);
             }
 
@@ -65,5 +60,13 @@ public class TomatoItem extends Item implements ProjectileItem {
         return new ThrownTomatoEntity(world, pos.getX(), pos.getY(), pos.getZ());
     }
 
+    public void throwTomato(World world, PlayerEntity user, ItemStack itemStack) {
+        ThrownTomatoEntity tomato = new ThrownTomatoEntity(world, user);
+        tomato.setItem(itemStack);
+        tomato.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 1.5F, 1.0F);
+        world.spawnEntity(tomato);
+        user.incrementStat(Stats.USED.getOrCreateStat(this));
+        itemStack.decrementUnlessCreative(1, user);
+    }
 
 }
