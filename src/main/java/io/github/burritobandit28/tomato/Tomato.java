@@ -79,6 +79,7 @@ public class Tomato implements ModInitializer {
         ThrownGoldenTomatoEntity.init();
 
         DispenserBlock.registerProjectileBehavior(ItemRegister.tomato);
+        DispenserBlock.registerProjectileBehavior(ItemRegister.golden_tomato);
         DispenserBlock.registerBehavior(BlockRegister.CARVED_TOMATO_BLOCK, new FallibleItemDispenserBehavior() {
             @Override
             protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {

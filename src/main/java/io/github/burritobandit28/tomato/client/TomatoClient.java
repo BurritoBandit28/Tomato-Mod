@@ -2,6 +2,7 @@ package io.github.burritobandit28.tomato.client;
 
 import io.github.burritobandit28.tomato.Tomato;
 import io.github.burritobandit28.tomato.block.BlockRegister;
+import io.github.burritobandit28.tomato.entities.ThrownGoldenTomatoEntity;
 import io.github.burritobandit28.tomato.entities.ThrownTomatoEntity;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -33,5 +34,6 @@ public class TomatoClient implements ClientModInitializer {
         ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> 0x38662b, BlockRegister.ATTACHED_TOMATO_STEM);
 
         EntityRendererRegistry.register(ThrownTomatoEntity.tomato, FlyingItemEntityRenderer::new);
+        EntityRendererRegistry.register(ThrownGoldenTomatoEntity.golden_tomato, FlyingItemEntityRenderer::new);
     }
 }
