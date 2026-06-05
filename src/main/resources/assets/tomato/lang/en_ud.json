@@ -1,5 +1,6 @@
 {
   "item.tomato.tomato" : "oʇɐɯo⟘",
+  "item.tomato.golden_tomato" : "oʇɐɯo⟘ uǝpꞁo⅁",
   "block.tomato.small_tomato_plant" : "spǝǝS oʇɐɯo⟘",
   "block.tomato.tomato_stem" : "pǝǝS ɐᵷǝW oʇɐɯo⟘",
   "block.tomato.tomato_block" : "oʇɐɯo⟘ ǝᵷɹɐꞀ",
@@ -9,5 +10,6 @@
   "death.attack.tomato_hurt": "%2$s ʎq ɥʇɐǝp oʇ pǝɯɐɥs sɐʍ %1$s",
   "death.attack.tomato_hurt.item" : "%2$s ʎq ɯǝɥʇ ʇɐ uʍoɹɥʇ %3$s pɐɥ %1$s",
   "itemGroup.tomato" : "poW oʇɐɯo⟘",
-  "entity.tomato.tomato" : "oʇɐɯo⟘"
+  "entity.tomato.tomato" : "oʇɐɯo⟘",
+  "entity.tomato.golden_tomato" : "oʇɐɯo⟘ uǝpꞁo⅁"
 }
