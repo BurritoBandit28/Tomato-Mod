@@ -11,5 +11,6 @@
   "death.attack.tomato_hurt.item" : "%1$s had %3$s thrown at them by %2$s",
   "itemGroup.tomato" : "Tomato Mod",
   "entity.tomato.tomato" : "Tomato",
-  "entity.tomato.golden_tomato" : "Golden Tomato"
+  "entity.tomato.golden_tomato" : "Golden Tomato",
+  "entity.tomato.tomato_golem" : "Tomato Golem"
 }
