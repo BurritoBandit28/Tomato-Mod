@@ -86,14 +86,14 @@ public class Tomato implements ModInitializer {
         CompostingChanceRegistry.INSTANCE.add(ItemRegister.carved_tomato_block, 0.65f);
 
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.FARMER, 1, factories -> {
-            factories.add((entity, random) -> new TradeOffer(new TradedItem(ItemRegister.tomato_seeds, 16), new ItemStack(Items.EMERALD), 2, 5, 0.05F));
-            factories.add((entity, random) -> new TradeOffer(new TradedItem(Items.EMERALD, 1), new ItemStack(ItemRegister.tomato, 16 ), 5, 5, 0.05F));
+            factories.add((entity, random) -> new TradeOffer(new TradedItem(Items.EMERALD, 1), new ItemStack(ItemRegister.tomato_seeds, 16), 2, 5, 0.05F));
+            factories.add((entity, random) -> new TradeOffer(new TradedItem(ItemRegister.tomato, 16), new ItemStack( Items.EMERALD), 5, 5, 0.05F));
 
         });
 
 
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.FARMER, 2, factories -> {
-            factories.add((entity, random) -> new TradeOffer(new TradedItem(Items.EMERALD, 1), new ItemStack(ItemRegister.tomato_block, 6 ), 12, 5, 0.05F));
+            factories.add((entity, random) -> new TradeOffer(new TradedItem(ItemRegister.tomato_block, 6), new ItemStack(Items.EMERALD, 1 ), 12, 5, 0.05F));
         });
     }
 
