@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#P#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:gold_ingot"
+    },
+    "P": {
+      "item": "tomato:tomato"
+    }
+  },
+  "result": {
+    "id": "tomato:golden_tomato",
+    "count": 1
+  }
+}
