@@ -9,9 +9,9 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 
 public class EntityRegister {
-    public static final EntityType<ThrownTomatoEntity> golden_tomato = register(
+    public static final EntityType<ThrownGoldenTomatoEntity> golden_tomato = register(
             "golden_tomato",
-            EntityType.Builder.<ThrownTomatoEntity>create(ThrownGoldenTomatoEntity::new, SpawnGroup.MISC).dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
+            EntityType.Builder.<ThrownGoldenTomatoEntity>create(ThrownGoldenTomatoEntity::new, SpawnGroup.MISC).dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
     );
     public static final EntityType<ThrownTomatoEntity> tomato = register(
             "tomato",

@@ -15,7 +15,7 @@ public class ThrownGoldenTomatoEntity extends ThrownTomatoEntity{
     }
 
     public ThrownGoldenTomatoEntity(World world, LivingEntity owner) {
-        super(EntityRegister.tomato, owner, world);
+        super(EntityRegister.golden_tomato, owner, world);
     }
 
     public ThrownGoldenTomatoEntity(World world, double x, double y, double z) {
