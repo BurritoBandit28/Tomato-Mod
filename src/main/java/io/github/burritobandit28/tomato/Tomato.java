@@ -5,6 +5,7 @@ import io.github.burritobandit28.tomato.effect.SplattedEffect;
 import io.github.burritobandit28.tomato.entities.EntityRegister;
 import io.github.burritobandit28.tomato.item.ItemRegister;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.DispenserBlock;
@@ -14,6 +15,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -23,6 +25,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPointer;
+import net.minecraft.village.*;
+import net.minecraft.world.WanderingTraderManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,8 +85,16 @@ public class Tomato implements ModInitializer {
         CompostingChanceRegistry.INSTANCE.add(ItemRegister.tomato_block, 0.65f);
         CompostingChanceRegistry.INSTANCE.add(ItemRegister.carved_tomato_block, 0.65f);
 
+        TradeOfferHelper.registerVillagerOffers(VillagerProfession.FARMER, 1, factories -> {
+            factories.add((entity, random) -> new TradeOffer(new TradedItem(Items.EMERALD, 1), new ItemStack(ItemRegister.tomato_seeds, 16), 2, 5, 0.05F));
+            factories.add((entity, random) -> new TradeOffer(new TradedItem(ItemRegister.tomato, 16), new ItemStack( Items.EMERALD), 5, 5, 0.05F));
+
+        });
 
 
+        TradeOfferHelper.registerVillagerOffers(VillagerProfession.FARMER, 2, factories -> {
+            factories.add((entity, random) -> new TradeOffer(new TradedItem(ItemRegister.tomato_block, 6), new ItemStack(Items.EMERALD, 1 ), 12, 5, 0.05F));
+        });
     }
 
 
