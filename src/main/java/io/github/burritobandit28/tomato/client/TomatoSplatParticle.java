@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
+import net.minecraft.util.math.Box;
 
 public class TomatoSplatParticle extends SpriteBillboardParticle {
 
@@ -16,13 +17,10 @@ public class TomatoSplatParticle extends SpriteBillboardParticle {
         this.scale *= 5F;
         this.maxAge = 400 + this.random.nextInt(12);
         this.collidesWithWorld = true;
-        //this.setTargetColor(15916745);
+        //this.setTargetColor(collidesWithWorld15916745);
         this.setSpriteForAge(spriteProvider);
-    }
-
-    public void move(double dx, double dy, double dz) {
-        this.setBoundingBox(this.getBoundingBox().offset(dx, dy, dz));
-        this.repositionFromBoundingBox();
+        // idk how to add the hitbox / collision box and icba rn
+        //this.setBoundingBox(new Box(0.2,0.2,0.2,-0.2,-0.2,-0.2));
     }
 
     public static class Factory implements ParticleFactory<SimpleParticleType> {

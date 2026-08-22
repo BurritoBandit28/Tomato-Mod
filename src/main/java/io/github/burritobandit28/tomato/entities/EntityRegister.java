@@ -19,7 +19,7 @@ public class EntityRegister {
     );
     public static final EntityType<TomatoGolemEntity> TOMATO_GOLEM_ENTITY_TYPE = register(
             "tomato_golem",
-            EntityType.Builder.create(TomatoGolemEntity::new, SpawnGroup.MISC).dimensions(0.75F, 1.35F).eyeHeight(1.0F)
+            EntityType.Builder.create(TomatoGolemEntity::new, SpawnGroup.MISC).dimensions(0.75F, 1.35F).eyeHeight(1.0F).maxTrackingRange(10)
     );
 
     private static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> type) {
