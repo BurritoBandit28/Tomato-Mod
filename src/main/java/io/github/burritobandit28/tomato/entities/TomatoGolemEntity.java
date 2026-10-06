@@ -1,12 +1,9 @@
 package io.github.burritobandit28.tomato.entities;
 
 import io.github.burritobandit28.tomato.goals.FindAndOrbitTomatoPlantGoal;
-import io.github.burritobandit28.tomato.goals.HarvestTomatoPlantGoal;
+import io.github.burritobandit28.tomato.goals.HarvestPlantGoal;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.FleeEntityGoal;
-import net.minecraft.entity.ai.goal.LookAroundGoal;
-import net.minecraft.entity.ai.goal.LookAtEntityGoal;
-import net.minecraft.entity.ai.goal.WanderAroundGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
@@ -28,13 +25,19 @@ public class TomatoGolemEntity extends PathAwareEntity {
     }
 
     @Override
+    public boolean isPersistent() {
+        return true;
+    }
+
+    @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new FindAndOrbitTomatoPlantGoal(this, 10));
-        this.goalSelector.add(0, new HarvestTomatoPlantGoal(this, 9));
-        this.goalSelector.add(1, new WanderAroundGoal(this, 1));
+    //  this.goalSelector.add(0, new FindAndOrbitTomatoPlantGoal(this, 10));
+        this.goalSelector.add(0, new FleeEntityGoal(this, PigEntity.class, 6.0F,1,1.2));
+        this.goalSelector.add(0, new SwimGoal(this));
+        this.goalSelector.add(0, new HarvestPlantGoal(this, 9));
         this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 4));
         this.goalSelector.add(2, new LookAtEntityGoal(this, CatEntity.class, 4));
-        this.goalSelector.add(3,new FleeEntityGoal(this, PigEntity.class, 6.0F,1,1.2));
+        this.goalSelector.add(2, new WanderAroundGoal(this, 1));
         this.goalSelector.add(4, new LookAroundGoal(this));
     }
 

@@ -17,6 +17,7 @@
       "io.github.burritobandit28.tomato.Tomato"
     ]
   },
+  "accessWidener" : "tomato.accesswidener",
   "mixins": [
     "tomato.mixins.json"
   ],
