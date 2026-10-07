@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 public class TomatoGolemRenderer extends MobEntityRenderer<TomatoGolemEntity, TomatoGolemModel<TomatoGolemEntity>> {
 
     private static final Identifier TEXTURE = Tomato.ID("textures/entity/tomato_golem.png");
+    private static final Identifier TEXTURE_NO_HAT = Tomato.ID("textures/entity/tomato_golem_hatless.png");
 
     public TomatoGolemRenderer(EntityRendererFactory.Context context) {
         super(context, new TomatoGolemModel<>(context.getPart(TomatoGolemModel.TOMATO_GOLEM_ROOT)), 0.36F);
@@ -19,6 +20,9 @@ public class TomatoGolemRenderer extends MobEntityRenderer<TomatoGolemEntity, To
 
     @Override
     public Identifier getTexture(TomatoGolemEntity entity) {
+        if (entity.getArmor() > 0) {
+            return TEXTURE_NO_HAT;
+        }
         return TEXTURE;
     }
 }

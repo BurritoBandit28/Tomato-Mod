@@ -1,6 +1,5 @@
 package io.github.burritobandit28.tomato.entities;
 
-import io.github.burritobandit28.tomato.goals.FindAndOrbitTomatoPlantGoal;
 import io.github.burritobandit28.tomato.goals.HarvestPlantGoal;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -10,9 +9,18 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.PigEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.BoneMealItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.Arrays;
 
 public class TomatoGolemEntity extends PathAwareEntity {
 
@@ -22,11 +30,38 @@ public class TomatoGolemEntity extends PathAwareEntity {
 
     protected TomatoGolemEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
+        Arrays.fill(this.armorDropChances, 1.0F);
     }
 
     @Override
     public boolean isPersistent() {
         return true;
+    }
+
+    @Override
+    protected ActionResult interactMob(PlayerEntity player, Hand hand) {
+        ItemStack items = player.getStackInHand(hand);
+        if (items.getItem() instanceof BoneMealItem && this.getHealth() < this.getMaxHealth()) {
+            // bonemeal sound effect + particles
+            items.decrement(1);
+            this.heal(this.random.nextBetween(2,5));
+            return ActionResult.SUCCESS;
+        }
+        if (( items.getItem() instanceof ArmorItem armorItem && armorItem.getSlotType() == EquipmentSlot.HEAD)  || items.getItem() == Items.AIR) {
+
+            // instanceofinstanceofinstanceofinstanceofinstanceofinstanceofinstanceofinstanceofinstanceofinstanceofinstanceof
+            if (items.getItem() instanceof ArmorItem helmet) {
+
+                playSound(helmet.getEquipSound().value());
+
+            }
+            ItemStack current_helmet = this.getEquippedStack(EquipmentSlot.HEAD);
+            equipStack(EquipmentSlot.HEAD, items);
+            player.setStackInHand(hand, current_helmet);
+            return ActionResult.SUCCESS;
+
+        }
+        return ActionResult.PASS;
     }
 
     @Override
