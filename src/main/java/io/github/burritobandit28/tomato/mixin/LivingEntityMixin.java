@@ -3,6 +3,7 @@ package io.github.burritobandit28.tomato.mixin;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import io.github.burritobandit28.tomato.Tomato;
 import io.github.burritobandit28.tomato.effect.SplattedEffect;
 import io.github.burritobandit28.tomato.item.ItemRegister;
 import net.minecraft.block.Block;
@@ -48,7 +49,7 @@ abstract class LivingEntityMixin extends Entity {
     @Group(min = 1, max = 1, name = "LivingEntityMixin")
     @WrapOperation(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;getSlipperiness()F"))
     private float hijackFriction(Block instance, Operation<Float> original) {
-        if (this.hasStatusEffect(SplattedEffect.SPLATTED_EFFECT) && !this.isSneaking()) {
+        if (this.hasStatusEffect(SplattedEffect.SPLATTED_EFFECT) && !this.isSneaking() && !this.getType().isIn(Tomato.TOMATO_IMMUNE)) {
             return 1.2f;
         }
         else {
@@ -60,7 +61,7 @@ abstract class LivingEntityMixin extends Entity {
     @Group(min = 1, max = 1, name = "LivingEntityMixin")
     @WrapOperation(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getFriction(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)F"))
     private float hijackFriction(BlockState instance, WorldView levelReader, BlockPos blockPos, Entity entity, Operation<Float> original) {
-        if (this.hasStatusEffect(SplattedEffect.SPLATTED_EFFECT) && !this.isSneaking()) {
+        if (this.hasStatusEffect(SplattedEffect.SPLATTED_EFFECT) && !this.isSneaking() && !this.getType().isIn(Tomato.TOMATO_IMMUNE)) {
             return 1.2f;
         }
         else {

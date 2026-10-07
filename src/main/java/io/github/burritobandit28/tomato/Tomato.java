@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.item.ArmorItem;
@@ -21,6 +22,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
@@ -42,6 +44,8 @@ public class Tomato implements ModInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final SoundEvent TOMATO_SPLAT = of("tomato_splat");
+
+    public static final TagKey<EntityType<?>> TOMATO_IMMUNE = TagKey.of(RegistryKeys.ENTITY_TYPE, ID("tomato_immune"));
 
     static SoundEvent of(String path) {
         var obj = SoundEvent.of(Identifier.of(MOD_ID, path));

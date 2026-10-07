@@ -2,6 +2,7 @@ package io.github.burritobandit28.tomato.item;
 
 import io.github.burritobandit28.tomato.Tomato;
 import io.github.burritobandit28.tomato.block.BlockRegister;
+import io.github.burritobandit28.tomato.entities.EntityRegister;
 import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -35,6 +36,7 @@ public class ItemRegister {
     public static final Item tomato_block = new BlockItem(BlockRegister.TOMATO_BLOCK,new Item.Settings());
     public static final Item carved_tomato_block = new BlockItem(BlockRegister.CARVED_TOMATO_BLOCK,new Item.Settings());
     public static final Item lit_carved_tomato_block = new BlockItem(BlockRegister.LIT_CARVED_TOMATO_BLOCK,new Item.Settings());
+    public static final Item tomato_golem_spawn_egg = new SpawnEggItem(EntityRegister.TOMATO_GOLEM_ENTITY_TYPE, 0xeaae39, 0xcc2c2c, new Item.Settings().maxCount(1));
 
     public static final RegistryKey<ItemGroup> TOMATO_GROUP_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Tomato.ID("item_group"));
     public static final ItemGroup TOMATO_GROUP = FabricItemGroup.builder()
@@ -50,6 +52,7 @@ public class ItemRegister {
         Registry.register(Registries.ITEM, Tomato.ID("carved_tomato_block"), carved_tomato_block);
         Registry.register(Registries.ITEM, Tomato.ID("lit_carved_tomato_block"), lit_carved_tomato_block);
         Registry.register(Registries.ITEM, Tomato.ID("golden_tomato"), golden_tomato);
+        Registry.register(Registries.ITEM, Tomato.ID("tomato_golem_spawn_egg"), tomato_golem_spawn_egg);
 
         Registry.register(Registries.ITEM_GROUP, TOMATO_GROUP_KEY, TOMATO_GROUP);
 
@@ -61,7 +64,10 @@ public class ItemRegister {
             itemGroup.add(tomato_block);
             itemGroup.add(carved_tomato_block);
             itemGroup.add(lit_carved_tomato_block);
-
+            itemGroup.add(tomato_golem_spawn_egg);
+        });
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(itemGroup -> {
+            itemGroup.add(tomato_golem_spawn_egg);
         });
 
     }

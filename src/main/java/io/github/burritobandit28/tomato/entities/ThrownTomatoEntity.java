@@ -4,6 +4,7 @@ import io.github.burritobandit28.tomato.Tomato;
 import io.github.burritobandit28.tomato.effect.SplattedEffect;
 import io.github.burritobandit28.tomato.item.ItemRegister;
 import net.minecraft.entity.*;
+import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
@@ -71,9 +72,13 @@ public class ThrownTomatoEntity extends ThrownItemEntity {
 
             Vec3d vel  = this.getVelocity();
             ServerWorld sw = (ServerWorld) this.getWorld();
-
-            if (!(hitResult instanceof EntityHitResult)) {
+            //                                                              add a tag for static entities that should get splatted
+            if (!(hitResult instanceof EntityHitResult entityHitResult) || entityHitResult.getEntity() instanceof ArmorStandEntity) {
                 Vec3d hitPos= hitResult.getPos();
+                if (hitResult instanceof  EntityHitResult entityHitResult) {
+                    var height = entityHitResult.getEntity().getHeight();
+                    hitPos = hitPos.add(0,random.nextFloat() * height, 0);
+                }
                 sw.spawnParticles(this.getParticle(), hitPos.x - (Tomato.posOrNeg(vel.x) * 0.2), hitPos.y - (Tomato.posOrNeg(vel.y) * 0.2), hitPos.z - (Tomato.posOrNeg(vel.z) * 0.2), 0, 0, -0.01, 0, 1);
             }
             this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
