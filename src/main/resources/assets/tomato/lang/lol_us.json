@@ -11,5 +11,8 @@
   "death.attack.tomato_hurt.item" : "%1$s had %3$s thwown at dem by %2$s",
   "itemGroup.tomato" : "Tomat Mod",
   "entity.tomato.tomato" : "Tomat",
-  "entity.tomato.golden_tomato" : "gold tomat"
+  "entity.tomato.golden_tomato" : "gold tomat",
+  "entity.tomato.tomato_golem" : "cutie wutie tomat wiv hat",
+  "item.tomato.tomato_golem_spawn_egg" : "cutie wutie tomat wiv hat eg",
+  "effect.tomato.splatted" : "Spwatted"
 }
