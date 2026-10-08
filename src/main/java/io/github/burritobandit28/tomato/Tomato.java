@@ -5,6 +5,7 @@ import io.github.burritobandit28.tomato.effect.SplattedEffect;
 import io.github.burritobandit28.tomato.entities.EntityRegister;
 import io.github.burritobandit28.tomato.item.ItemRegister;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
@@ -14,10 +15,18 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
+import net.minecraft.entity.passive.SnowGolemEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTables;
+import net.minecraft.loot.condition.EntityPropertiesLootCondition;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.entry.LootPoolEntry;
 import net.minecraft.particle.SimpleParticleType;
+import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -46,6 +55,7 @@ public class Tomato implements ModInitializer {
     public static final SoundEvent TOMATO_SPLAT = of("tomato_splat");
 
     public static final TagKey<EntityType<?>> TOMATO_IMMUNE = TagKey.of(RegistryKeys.ENTITY_TYPE, ID("tomato_immune"));
+    public static final TagKey<EntityType<?>> TOMATO_GOLEM_TARGETS = TagKey.of(RegistryKeys.ENTITY_TYPE, ID("tomato_golem_targets"));
 
     static SoundEvent of(String path) {
         var obj = SoundEvent.of(Identifier.of(MOD_ID, path));
@@ -95,10 +105,22 @@ public class Tomato implements ModInitializer {
 
         });
 
-
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.FARMER, 2, factories -> {
             factories.add((entity, random) -> new TradeOffer(new TradedItem(ItemRegister.tomato_block, 6), new ItemStack(Items.EMERALD, 1 ), 12, 5, 0.05F));
         });
+
+        // add music disc for when creeper killed by tomato golem
+        //LootTableEvents.MODIFY.register(((key, tableBuilder, source, registries) -> {
+        //    if (key.getValue().equals(Identifier.ofVanilla("entities/creeper"))) {
+        //        System.out.println("Aw man");
+        //        LootPool.Builder pool = LootPool.builder()
+        //                .with(ItemEntry.builder(wackky crazy music disc))
+        //                .conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.create().type(EntityRegister.TOMATO_GOLEM_ENTITY_TYPE).build())
+        //                );
+        //        tableBuilder.pool(pool);
+        //    }
+        //}));
+
     }
 
 

@@ -8,14 +8,16 @@ import io.github.burritobandit28.tomato.Tomato;
 import io.github.burritobandit28.tomato.entities.TomatoGolemEntity;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.model.*;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 
-public class TomatoGolemModel<T extends LivingEntity> extends EntityModel<TomatoGolemEntity> {
+public class TomatoGolemModel<T extends LivingEntity> extends BipedEntityModel<TomatoGolemEntity> {
 	private final ModelPart root;
 	private final ModelPart body;
 	private final ModelPart head;
@@ -25,37 +27,38 @@ public class TomatoGolemModel<T extends LivingEntity> extends EntityModel<Tomato
 	private final ModelPart left_leg;
 	private final ModelPart right_leg;
 	public TomatoGolemModel(ModelPart root) {
-		this.root = root.getChild("root");
-		this.body = this.root.getChild("body");
-		this.head = this.body.getChild("head");
-		this.hat = this.head.getChild("hat");
-		this.right_arm = this.body.getChild("right_arm");
-		this.left_arm = this.body.getChild("left_arm");
-		this.left_leg = this.body.getChild("left_leg");
-		this.right_leg = this.body.getChild("right_leg");
+        super(root, RenderLayer::getEntityCutoutNoCull);
+        this.root = root;
+		this.body = root.getChild("body");
+		this.head = root.getChild("head");
+		this.hat = root.getChild("hat");
+		this.right_arm = root.getChild("right_arm");
+		this.left_arm = root.getChild("left_arm");
+		this.left_leg = root.getChild("left_leg");
+		this.right_leg = root.getChild("right_leg");
 	}
 	public static TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
 		ModelPartData modelPartData = modelData.getRoot();
-		ModelPartData root = modelPartData.addChild("root", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
+		ModelPartData head = modelPartData.addChild("head", ModelPartBuilder.create().uv(0, 0).cuboid(-6.0F, -9.0F, -4.5F, 12.0F, 9.0F, 9.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 12.5F, 0.5F));
 
-		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(22, 47).cuboid(-6.0F, -5.75F, -4.5F, 12.0F, 8.0F, 9.0F, new Dilation(-0.25F))
-				.uv(51, 34).cuboid(-8.25F, -2.8F, 2.249F, 3.0F, 5.0F, 0.0F, new Dilation(0.0F))
-				.uv(51, 34).mirrored().cuboid(5.25F, -7.0F, -2.75F, 3.0F, 5.0F, 0.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(0.0F, -6.0F, 0.5F));
-
-		ModelPartData head = body.addChild("head", ModelPartBuilder.create().uv(0, 0).cuboid(-6.0F, -9.0F, -4.5F, 12.0F, 9.0F, 9.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -5.5F, 0.0F));
-
-		ModelPartData hat = head.addChild("hat", ModelPartBuilder.create().uv(9, 18).cuboid(-10.0F, 0.0F, -7.0F, 20.0F, 0.0F, 15.0F, new Dilation(0.0F))
+		ModelPartData straw_hat = head.addChild("straw_hat", ModelPartBuilder.create().uv(9, 18).cuboid(-10.0F, 0.0F, -7.0F, 20.0F, 0.0F, 15.0F, new Dilation(0.0F))
 				.uv(0, 33).cuboid(-7.0F, -3.0F, -5.0F, 14.0F, 3.0F, 11.0F, new Dilation(0.0F))
 				.uv(50, 42).cuboid(4.0F, -4.0F, -5.25F, 7.0F, 4.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -8.0F, -0.5F, -0.0698F, 0.0F, 0.0873F));
 
-		ModelPartData right_arm = body.addChild("right_arm", ModelPartBuilder.create().uv(0, 22).cuboid(-5.5F, -2.0F, -2.0F, 6.0F, 4.0F, 4.0F, new Dilation(0.0F)), ModelTransform.pivot(-5.75F, -3.0F, 0.0F));
+		ModelPartData right_arm = modelPartData.addChild("right_arm", ModelPartBuilder.create().uv(0, 22).cuboid(-5.5F, -2.0F, -2.0F, 6.0F, 4.0F, 4.0F, new Dilation(0.0F)), ModelTransform.pivot(-5.75F, 15.0F, 0.5F));
 
-		ModelPartData left_arm = body.addChild("left_arm", ModelPartBuilder.create().uv(44, 1).mirrored().cuboid(0.0F, -2.0F, -2.0F, 6.0F, 4.0F, 4.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(5.75F, -3.0F, 0.0F));
+		ModelPartData left_arm = modelPartData.addChild("left_arm", ModelPartBuilder.create().uv(44, 1).mirrored().cuboid(0.0F, -2.0F, -2.0F, 6.0F, 4.0F, 4.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(5.75F, 15.0F, 0.5F));
 
-		ModelPartData left_leg = body.addChild("left_leg", ModelPartBuilder.create().uv(48, 10).cuboid(6.75F, 5.0F, -2.0F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F)), ModelTransform.pivot(-5.75F, -3.0F, 0.0F));
+		ModelPartData left_leg = modelPartData.addChild("left_leg", ModelPartBuilder.create().uv(48, 10).cuboid(6.75F, 5.0F, -2.0F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F)), ModelTransform.pivot(-5.75F, 15.0F, 0.5F));
 
-		ModelPartData right_leg = body.addChild("right_leg", ModelPartBuilder.create().uv(0, 56).cuboid(0.75F, 5.0F, -2.0F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F)), ModelTransform.pivot(-5.75F, -3.0F, 0.0F));
+		ModelPartData right_leg = modelPartData.addChild("right_leg", ModelPartBuilder.create().uv(0, 56).cuboid(0.75F, 5.0F, -2.0F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F)), ModelTransform.pivot(-5.75F, 15.0F, 0.5F));
+
+		ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create().uv(22, 47).cuboid(-6.0F, -5.75F, -4.5F, 12.0F, 8.0F, 9.0F, new Dilation(-0.25F))
+				.uv(51, 34).cuboid(-8.25F, -2.8F, 2.249F, 3.0F, 5.0F, 0.0F, new Dilation(0.0F))
+				.uv(51, 34).mirrored().cuboid(5.25F, -7.0F, -2.75F, 3.0F, 5.0F, 0.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(0.0F, 18.0F, 0.5F));
+
+		ModelPartData hat = modelPartData.addChild("hat", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 4.5F, 0.0F));
 		return TexturedModelData.of(modelData, 64, 64);
 	}
 	@Override

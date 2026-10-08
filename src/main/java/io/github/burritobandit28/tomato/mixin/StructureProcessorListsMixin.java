@@ -19,6 +19,9 @@ import java.util.List;
 @Mixin(StructureProcessorLists.class)
 public class StructureProcessorListsMixin {
 
+    // this just does not work at all lol
+    // cant figure out why, if you know please submit a PR I would really appreciate it
+
     @Shadow
     @Final
     public static RegistryKey<StructureProcessorList> FARM_SAVANNA;

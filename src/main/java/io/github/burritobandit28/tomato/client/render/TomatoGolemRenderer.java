@@ -1,6 +1,7 @@
 package io.github.burritobandit28.tomato.client.render;
 
 import io.github.burritobandit28.tomato.Tomato;
+import io.github.burritobandit28.tomato.client.TomatoClient;
 import io.github.burritobandit28.tomato.entities.TomatoGolemEntity;
 import net.minecraft.client.render.entity.*;
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
@@ -15,8 +16,7 @@ public class TomatoGolemRenderer extends MobEntityRenderer<TomatoGolemEntity, To
 
     public TomatoGolemRenderer(EntityRendererFactory.Context ctx) {
         super(ctx, new TomatoGolemModel<>(ctx.getPart(TomatoGolemModel.TOMATO_GOLEM_ROOT)), 0.36F);
-        // temporary - create custom armor renderer with custom model
-        //this.addFeature(new ArmorFeatureRenderer(this, new ArmorEntityModel(ctx.getPart(EntityModelLayers.PLAYER_INNER_ARMOR)), new ArmorEntityModel(ctx.getPart(EntityModelLayers.PLAYER_OUTER_ARMOR)), ctx.getModelManager()));
+        this.addFeature(new ArmorFeatureRenderer(this, new ArmorEntityModel(ctx.getPart(TomatoClient.TomatoHelmetLayer)), new ArmorEntityModel(ctx.getPart(TomatoClient.TomatoHelmetLayer)), ctx.getModelManager()));
     }
 
     @Override
