@@ -2,6 +2,10 @@ package io.github.burritobandit28.tomato.entities;
 
 import io.github.burritobandit28.tomato.Tomato;
 import io.github.burritobandit28.tomato.goals.HarvestPlantGoal;
+import net.minecraft.block.Block;
+import net.minecraft.block.ChestBlock;
+import net.minecraft.block.CropBlock;
+import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
@@ -17,16 +21,14 @@ import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.SnowballEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.BoneMealItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.particle.ParticleUtil;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -49,21 +51,39 @@ public class TomatoGolemEntity extends GolemEntity implements RangedAttackMob {
 
     @Override
     protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ItemStack items = player.getStackInHand(hand);
-        if (items.getItem() instanceof BoneMealItem && this.getHealth() < this.getMaxHealth()) {
+        ItemStack stack = player.getStackInHand(hand);
+
+        if (stack.getItem() instanceof ShearsItem && !this.getWorld().isClient) {
+            BlockPos pos = this.getBlockPos();
+            for (ItemStack armorStack : this.getEquippedItems()) {
+                ItemScatterer.spawn(this.getWorld(), pos.getX(), pos.getY(), pos.getZ(), armorStack);
+            }
+            this.equipStack(EquipmentSlot.HEAD, ItemStack.EMPTY);
+            this.equipStack(EquipmentSlot.BODY, ItemStack.EMPTY);
+            this.equipStack(EquipmentSlot.LEGS, ItemStack.EMPTY);
+            this.equipStack(EquipmentSlot.FEET, ItemStack.EMPTY);
+            stack.damage(1, player, getSlotForHand(hand));
+
+            this.playSound(SoundEvents.BLOCK_GROWING_PLANT_CROP);
+
+            return ActionResult.SUCCESS;
+        }
+        if (stack.getItem() instanceof BoneMealItem && this.getHealth() < this.getMaxHealth()) {
             // bonemeal sound effect + particles
-            items.decrement(1);
-            this.heal(this.random.nextBetween(2,5));
+            stack.decrementUnlessCreative(1, player);
+            this.heal(this.random.nextBetween(2, 5));
+            this.playSound(SoundEvents.ITEM_BONE_MEAL_USE);
             ParticleUtil.spawnParticlesAround(this.getWorld(), this.getBlockPos(), 12, ParticleTypes.HAPPY_VILLAGER);
             return ActionResult.SUCCESS;
         }
-        if ( items.getItem() instanceof ArmorItem armorItem) {
+        if (stack.getItem() instanceof ArmorItem armorItem) {
             playSound(armorItem.getEquipSound().value());
             ItemStack current_helmet = this.getEquippedStack(armorItem.getSlotType());
-            equipStack(armorItem.getSlotType(), items);
+            equipStack(armorItem.getSlotType(), stack);
             player.setStackInHand(hand, current_helmet);
             return ActionResult.SUCCESS;
         }
+
         return ActionResult.PASS;
     }
 
