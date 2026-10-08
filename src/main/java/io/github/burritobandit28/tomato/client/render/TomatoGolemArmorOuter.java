@@ -18,9 +18,18 @@ public class TomatoGolemArmorOuter extends BipedEntityModel<TomatoGolemEntity> {
 	public static TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
 		ModelPartData modelPartData = modelData.getRoot();
+
+		// I want to quickly disclaim something
+		// The hat and head model are complete bs made entirely inside intellij
+		// they may be off-centre by like 0.7 of a pixel or the hat layer might be misaligned
+		// "might" no it definitely is
+
 		ModelPartData head = modelPartData.addChild("head", ModelPartBuilder.create().uv(0, 0).cuboid(-4.0F, -9.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(2.3F)), ModelTransform.pivot(0.0F, 12.5F, 0.5F));
 
-		ModelPartData hat = modelPartData.addChild("hat", ModelPartBuilder.create().uv(32, 0).cuboid(-4.0F, -9.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(2.8F)), ModelTransform.pivot(0.0F, 12.5F, 0.5F));
+		ModelPartData hat = head.addChild("real_hat", ModelPartBuilder.create().uv(32, 0).cuboid(-4.0F, -21.5F, -4.5F, 8.0F, 8.0F, 8.0F, new Dilation(2.9F)), ModelTransform.pivot(0.0F, 12.5F, 0.5F));
+
+		ModelPartData fake_hat = modelPartData.addChild("hat", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 4.5F, 0.0F));
+
 
 		ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
 

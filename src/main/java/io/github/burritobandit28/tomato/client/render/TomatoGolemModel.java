@@ -54,9 +54,9 @@ public class TomatoGolemModel<T extends LivingEntity> extends BipedEntityModel<T
 
 		ModelPartData right_leg = modelPartData.addChild("right_leg", ModelPartBuilder.create().uv(0, 56).cuboid(0.75F, 5.0F, -2.0F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F)), ModelTransform.pivot(-5.75F, 15.0F, 0.5F));
 
-		ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create().uv(22, 47).cuboid(-6.0F, -5.75F, -4.5F, 12.0F, 8.0F, 9.0F, new Dilation(-0.25F))
-				.uv(51, 34).cuboid(-8.25F, -2.8F, 2.249F, 3.0F, 5.0F, 0.0F, new Dilation(0.0F))
-				.uv(51, 34).mirrored().cuboid(5.25F, -7.0F, -2.75F, 3.0F, 5.0F, 0.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(0.0F, 18.0F, 0.5F));
+		ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create().uv(22, 47).cuboid(-6.0F, -0.75F, -4.5F, 12.0F, 8.0F, 9.0F, new Dilation(-0.25F))
+				.uv(51, 34).cuboid(-8.25F, 2.2F, 2.249F, 3.0F, 5.0F, 0.0F, new Dilation(0.0F))
+				.uv(51, 34).mirrored().cuboid(5.25F, -2.0F, -2.75F, 3.0F, 5.0F, 0.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(0.0F, 13.0F, 0.5F));
 
 		ModelPartData hat = modelPartData.addChild("hat", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 4.5F, 0.0F));
 		return TexturedModelData.of(modelData, 64, 64);
