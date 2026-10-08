@@ -57,14 +57,10 @@ public class TomatoGolemEntity extends GolemEntity implements RangedAttackMob {
             ParticleUtil.spawnParticlesAround(this.getWorld(), this.getBlockPos(), 12, ParticleTypes.HAPPY_VILLAGER);
             return ActionResult.SUCCESS;
         }
-        if (( items.getItem() instanceof ArmorItem armorItem && armorItem.getSlotType() == EquipmentSlot.HEAD)  || items.getItem() == Items.AIR) {
-
-            // instanceofinstanceofinstanceofinstanceofinstanceofinstanceofinstanceofinstanceofinstanceofinstanceofinstanceof
-            if (items.getItem() instanceof ArmorItem helmet) {
-                playSound(helmet.getEquipSound().value());
-            }
-            ItemStack current_helmet = this.getEquippedStack(EquipmentSlot.HEAD);
-            equipStack(EquipmentSlot.HEAD, items);
+        if ( items.getItem() instanceof ArmorItem armorItem) {
+            playSound(armorItem.getEquipSound().value());
+            ItemStack current_helmet = this.getEquippedStack(armorItem.getSlotType());
+            equipStack(armorItem.getSlotType(), items);
             player.setStackInHand(hand, current_helmet);
             return ActionResult.SUCCESS;
         }
@@ -82,7 +78,8 @@ public class TomatoGolemEntity extends GolemEntity implements RangedAttackMob {
         this.goalSelector.add(2, new LookAtEntityGoal(this, CatEntity.class, 4));
         this.goalSelector.add(2, new WanderAroundGoal(this, 1));
         this.goalSelector.add(4, new LookAroundGoal(this));
-        this.targetSelector.add(1, new ActiveTargetGoal(this, MobEntity.class, 10, true, false, (entity) -> ((MobEntity)entity).getType().isIn(Tomato.TOMATO_GOLEM_TARGETS)));
+        this.targetSelector.add(1, new ActiveTargetGoal(this, MobEntity.class, 10, true, false, (entity) -> (this.getArmor()) > 0 && ((MobEntity) entity).getType().isIn(Tomato.TOMATO_GOLEM_TARGETS))
+        );
     }
 
     public static DefaultAttributeContainer.Builder createTomatoGolemAttributes() {
