@@ -16,6 +16,7 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
+import org.joml.Vector3f;
 
 public class TomatoGolemModel<T extends LivingEntity> extends BipedEntityModel<TomatoGolemEntity> {
 	private final ModelPart root;
@@ -69,6 +70,11 @@ public class TomatoGolemModel<T extends LivingEntity> extends BipedEntityModel<T
 		this.left_leg.pitch = MathHelper.cos(limbAngle * 0.6662F + (float) Math.PI) * 1.4F * limbDistance;
 		this.right_arm.yaw = MathHelper.cos(limbAngle * 0.6662F) * limbDistance;
 		this.left_arm.yaw = MathHelper.cos(limbAngle * 0.6662F) * 1.4F * limbDistance;
+		if (this.riding) {
+			//this.root.translate(new Vector3f(0.0F,-1.0F,0.0F));
+			this.left_leg.pitch = (float) -Math.PI / 4;
+			this.right_leg.pitch = (float) -Math.PI / 4;
+		}
 	}
 
 	@Override
