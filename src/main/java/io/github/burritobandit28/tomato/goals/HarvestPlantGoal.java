@@ -1,13 +1,24 @@
 package io.github.burritobandit28.tomato.goals;
 
+import io.github.burritobandit28.tomato.block.SmallTomatoPlant;
+import io.github.burritobandit28.tomato.item.ItemRegister;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.entity.ai.goal.MoveToTargetPosGoal;
 import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
+import net.minecraft.registry.Registries;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+
+import static net.minecraft.block.CropBlock.AGE;
 
 public class HarvestPlantGoal extends MoveToTargetPosGoal {
 
@@ -45,9 +56,22 @@ public class HarvestPlantGoal extends MoveToTargetPosGoal {
     }
 
     private void harvest(BlockPos pos, World world) {
-        if (world.getBlockState(pos).getBlock() instanceof CropBlock plant) {
-            world.breakBlock(pos, true);
-            world.setBlockState(pos, plant.getDefaultState());
+        BlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
+        if (block instanceof SmallTomatoPlant tplant) {
+            var stack = ItemRegister.tomato.getDefaultStack();
+            stack.setCount(2);
+            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+
+            var blockSoundGroup = state.getSoundGroup();
+            world.playSound(this.mob, pos, Registries.SOUND_EVENT.getEntry(SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES).value(), SoundCategory.BLOCKS, (blockSoundGroup.getVolume() + 1.0F) / 2.0F, blockSoundGroup.getPitch() * 0.8F);
+            world.setBlockState(pos, state.with(AGE, 2));
+        }
+        else {
+            if (block instanceof CropBlock plant) {
+                world.breakBlock(pos, true);
+                world.setBlockState(pos, plant.getDefaultState());
+            }
         }
     }
 
