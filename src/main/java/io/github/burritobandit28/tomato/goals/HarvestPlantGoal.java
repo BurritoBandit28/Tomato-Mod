@@ -1,12 +1,16 @@
 package io.github.burritobandit28.tomato.goals;
 
 import io.github.burritobandit28.tomato.block.SmallTomatoPlant;
+import io.github.burritobandit28.tomato.entities.TomatoGolemEntity;
 import io.github.burritobandit28.tomato.item.ItemRegister;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.entity.ai.goal.MoveToTargetPosGoal;
 import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -17,6 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+
+import java.util.Collections;
 
 import static net.minecraft.block.CropBlock.AGE;
 
@@ -69,8 +75,13 @@ public class HarvestPlantGoal extends MoveToTargetPosGoal {
         }
         else {
             if (block instanceof CropBlock plant) {
+                BlockItem seed = (BlockItem) plant.asItem();
                 world.breakBlock(pos, true);
-                world.setBlockState(pos, plant.getDefaultState());
+                if (((TomatoGolemEntity)this.mob).getInventory().containsAny(Collections.singleton(seed))) {
+                    world.setBlockState(pos, plant.getDefaultState());
+                    ((TomatoGolemEntity)this.mob).getInventory().removeItem(seed,1);
+                }
+                ((TomatoGolemEntity)this.mob).setLastPlanted(seed);
             }
         }
     }

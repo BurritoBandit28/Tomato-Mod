@@ -17,6 +17,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.passive.SnowGolemEntity;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
@@ -56,6 +57,7 @@ public class Tomato implements ModInitializer {
 
     public static final TagKey<EntityType<?>> TOMATO_IMMUNE = TagKey.of(RegistryKeys.ENTITY_TYPE, ID("tomato_immune"));
     public static final TagKey<EntityType<?>> TOMATO_GOLEM_TARGETS = TagKey.of(RegistryKeys.ENTITY_TYPE, ID("tomato_golem_targets"));
+    public static final TagKey<Item> ONLY_PICKUP_IF_NONE = TagKey.of(RegistryKeys.ITEM, ID("only_pickup_if_none"));
 
     static SoundEvent of(String path) {
         var obj = SoundEvent.of(Identifier.of(MOD_ID, path));

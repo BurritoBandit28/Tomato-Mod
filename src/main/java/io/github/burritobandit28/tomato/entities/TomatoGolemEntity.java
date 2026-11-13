@@ -2,29 +2,22 @@ package io.github.burritobandit28.tomato.entities;
 
 import io.github.burritobandit28.tomato.Tomato;
 import io.github.burritobandit28.tomato.goals.HarvestPlantGoal;
-import net.minecraft.block.Block;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.block.CropBlock;
-import net.minecraft.block.entity.ChestBlockEntity;
-import net.minecraft.client.render.entity.PlayerEntityRenderer;
-import net.minecraft.enchantment.EnchantmentHelper;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.Monster;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.thrown.SnowballEntity;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.*;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.particle.ParticleUtil;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -32,16 +25,24 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Optional;
 
-public class TomatoGolemEntity extends GolemEntity implements RangedAttackMob {
+public class TomatoGolemEntity extends GolemEntity implements RangedAttackMob, InventoryOwner {
+
 
 
     private BlockPos anchorPlantPos = null;
 
+    private final SimpleInventory inventory = new SimpleInventory(9);
+
+    private BlockItem last_planted = null;
+
 
     protected TomatoGolemEntity(EntityType<? extends GolemEntity> entityType, World world) {
         super(entityType, world);
+        this.setCanPickUpLoot(true);
+        this.setPersistent();
     }
 
     //@Override
@@ -85,6 +86,26 @@ public class TomatoGolemEntity extends GolemEntity implements RangedAttackMob {
         }
 
         return ActionResult.PASS;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        World world = this.getWorld();
+        if (world.getBlockState(this.getBlockPos()).getBlock() == Blocks.FARMLAND && world.getBlockState(this.getBlockPos().up()).getBlock() == Blocks.AIR) {
+            if (this.getInventory().containsAny(Collections.singleton(this.last_planted))) {
+                world.setBlockState(this.getBlockPos().up(), this.last_planted.getBlock().getDefaultState());
+                (this).getInventory().removeItem(this.last_planted,1);
+            }
+        }
+    }
+
+    @Override
+    public boolean canPickupItem(ItemStack stack) {
+        if ( stack.isIn(Tomato.ONLY_PICKUP_IF_NONE) && !this.inventory.containsAny(Collections.singleton(stack.getItem()))) {
+            return true;
+        }
+        return stack.isIn(ConventionalItemTags.SEEDS); // || stack.isIn(ItemTags.VILLAGER_PLANTABLE_SEEDS) ;
     }
 
     @Override
@@ -135,12 +156,55 @@ public class TomatoGolemEntity extends GolemEntity implements RangedAttackMob {
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        //                                                          string comparisons because ica anymore
+        //                                                          string comparisons because icba anymore
         return super.isInvulnerableTo(damageSource) || damageSource.getName().equals("tomato_hurt");
     }
 
     @Override
     protected float getDropChance(EquipmentSlot slot) {
         return 1.0F;
+    }
+
+    @Override
+    public SimpleInventory getInventory() {
+        return this.inventory;
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        if (!this.getWorld().isClient) {
+            if (this.last_planted != null) {
+                nbt.put("last_planted", this.last_planted.getDefaultStack().encode(this.getRegistryManager()));
+            }
+
+            this.writeInventory(nbt, this.getRegistryManager());
+        }
+    }
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        if (!this.getWorld().isClient) {
+
+            Optional<ItemStack> option = ItemStack.fromNbt(this.getRegistryManager(), nbt.get("last_planted"));
+            option.ifPresent(itemStack -> this.setLastPlanted((BlockItem) itemStack.getItem()));
+
+            this.readInventory(nbt, this.getRegistryManager());
+        }
+    }
+
+    @Override
+    protected void loot(ItemEntity item) {
+        if ( this.canPickupItem(item.getStack()) ) {
+            InventoryOwner.pickUpItem(this, this, item);
+        }
+    }
+
+    public BlockItem getLastPlanted() {
+        return last_planted;
+    }
+
+    public void setLastPlanted(BlockItem last_planted) {
+        this.last_planted = last_planted;
     }
 }
