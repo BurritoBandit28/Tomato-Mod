@@ -57,6 +57,7 @@ public class HarvestPlantGoal extends MoveToTargetPosGoal {
         //BlockPos currentblockPos = this.tweakToProperPos(this.mob.getBlockPos(), world);
         BlockPos currentblockPos = this.mob.getBlockPos();
         if (blockPosEquals(currentblockPos, this.targetPos) || blockPosEquals(currentblockPos.up(), this.targetPos) ) {
+            System.out.println("begin harvestw");
             harvest(this.targetPos, world);
         }
     }
@@ -64,24 +65,27 @@ public class HarvestPlantGoal extends MoveToTargetPosGoal {
     private void harvest(BlockPos pos, World world) {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
-        if (block instanceof SmallTomatoPlant tplant) {
-            var stack = ItemRegister.tomato.getDefaultStack();
-            stack.setCount(2);
-            ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), stack);
 
-            var blockSoundGroup = state.getSoundGroup();
-            world.playSound(this.mob, pos, Registries.SOUND_EVENT.getEntry(SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES).value(), SoundCategory.BLOCKS, (blockSoundGroup.getVolume() + 1.0F) / 2.0F, blockSoundGroup.getPitch() * 0.8F);
-            world.setBlockState(pos, state.with(AGE, 2));
-        }
-        else {
-            if (block instanceof CropBlock plant) {
-                BlockItem seed = (BlockItem) plant.asItem();
-                world.breakBlock(pos, true);
-                if (((TomatoGolemEntity)this.mob).getInventory().containsAny(Collections.singleton(seed))) {
-                    world.setBlockState(pos, plant.getDefaultState());
-                    ((TomatoGolemEntity)this.mob).getInventory().removeItem(seed,1);
+        if (!world.isClient()) {
+
+            if (block instanceof SmallTomatoPlant tplant) {
+                System.out.println("tomato harvest");
+                var stack = ItemRegister.tomato.getDefaultStack();
+                stack.setCount(2);
+                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+                var blockSoundGroup = state.getSoundGroup();
+                world.playSound(this.mob, pos, Registries.SOUND_EVENT.getEntry(SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES).value(), SoundCategory.BLOCKS, (blockSoundGroup.getVolume() + 1.0F) / 2.0F, blockSoundGroup.getPitch() * 0.8F);
+                world.setBlockState(pos, state.with(AGE, 2));
+            } else {
+                if (block instanceof CropBlock plant) {
+                    BlockItem seed = (BlockItem) plant.asItem();
+                    world.breakBlock(pos, true);
+                    if (((TomatoGolemEntity) this.mob).getInventory().containsAny(Collections.singleton(seed))) {
+                        world.setBlockState(pos, plant.getDefaultState());
+                        ((TomatoGolemEntity) this.mob).getInventory().removeItem(seed, 1);
+                    }
+                    ((TomatoGolemEntity) this.mob).setLastPlanted(seed);
                 }
-                ((TomatoGolemEntity)this.mob).setLastPlanted(seed);
             }
         }
     }

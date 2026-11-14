@@ -6,6 +6,7 @@ import io.github.burritobandit28.tomato.entities.EntityRegister;
 import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.block.jukebox.JukeboxSongs;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -14,6 +15,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
+import net.minecraft.util.Rarity;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +27,6 @@ public class ItemRegister {
             .food(new FoodComponent.Builder().nutrition(2).saturationModifier(1.0F).build())
             );
 
-    // todo: add unique status effect
     public static final Item golden_tomato = new GoldenTomatoItem(
             new Item.Settings()
                     .food(new FoodComponent.Builder().nutrition(4).saturationModifier(2.0F).statusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 600), 1f).build())
@@ -37,6 +38,7 @@ public class ItemRegister {
     public static final Item carved_tomato_block = new BlockItem(BlockRegister.CARVED_TOMATO_BLOCK,new Item.Settings());
     public static final Item lit_carved_tomato_block = new BlockItem(BlockRegister.LIT_CARVED_TOMATO_BLOCK,new Item.Settings());
     public static final Item tomato_golem_spawn_egg = new SpawnEggItem(EntityRegister.TOMATO_GOLEM_ENTITY_TYPE, 0xeaae39, 0xcc2c2c, new Item.Settings().maxCount(1));
+    public static final Item splat_music_disc = new Item((new Item.Settings()).maxCount(1).rarity(Rarity.RARE).jukeboxPlayable(JukeboxSongs.CAT));
 
     public static final RegistryKey<ItemGroup> TOMATO_GROUP_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Tomato.ID("item_group"));
     public static final ItemGroup TOMATO_GROUP = FabricItemGroup.builder()
@@ -53,6 +55,7 @@ public class ItemRegister {
         Registry.register(Registries.ITEM, Tomato.ID("lit_carved_tomato_block"), lit_carved_tomato_block);
         Registry.register(Registries.ITEM, Tomato.ID("golden_tomato"), golden_tomato);
         Registry.register(Registries.ITEM, Tomato.ID("tomato_golem_spawn_egg"), tomato_golem_spawn_egg);
+        Registry.register(Registries.ITEM, Tomato.ID("splat_music_disc"), splat_music_disc);
 
         Registry.register(Registries.ITEM_GROUP, TOMATO_GROUP_KEY, TOMATO_GROUP);
 

@@ -39,16 +39,15 @@ public class StructureProcessorListsMixin {
             processorListRegisterable.register(key, new StructureProcessorList(ImmutableList.of(
                     new RuleStructureProcessor(
                             ImmutableList.of(
-                                    new StructureProcessorRule(new RandomBlockMatchRuleTest(Blocks.WHEAT, 0.1F), AlwaysTrueRuleTest.INSTANCE, Blocks.MELON_STEM.getDefaultState()),
+                                    //new StructureProcessorRule(new RandomBlockMatchRuleTest(Blocks.WHEAT, 0.1F), AlwaysTrueRuleTest.INSTANCE, BlockRegister.TOMATO_STEM.getDefaultState()),
                                     new StructureProcessorRule(new RandomBlockMatchRuleTest(Blocks.WHEAT, 1.0F), AlwaysTrueRuleTest.INSTANCE, BlockRegister.SMALL_TOMATO_PLANT.getDefaultState())
                             )
                     )
             )));
-        }
-        else {
+        } else {
             processorListRegisterable.register(key, new StructureProcessorList(processors));
         }
-        ci.cancel();
+        //ci.cancel();
 
     }
 }

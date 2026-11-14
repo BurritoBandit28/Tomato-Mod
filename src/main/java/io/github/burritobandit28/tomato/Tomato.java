@@ -112,16 +112,16 @@ public class Tomato implements ModInitializer {
         });
 
         // add music disc for when creeper killed by tomato golem
-        //LootTableEvents.MODIFY.register(((key, tableBuilder, source, registries) -> {
-        //    if (key.getValue().equals(Identifier.ofVanilla("entities/creeper"))) {
-        //        System.out.println("Aw man");
-        //        LootPool.Builder pool = LootPool.builder()
-        //                .with(ItemEntry.builder(wackky crazy music disc))
-        //                .conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.create().type(EntityRegister.TOMATO_GOLEM_ENTITY_TYPE).build())
-        //                );
-        //        tableBuilder.pool(pool);
-        //    }
-        //}));
+        LootTableEvents.MODIFY.register(((key, tableBuilder, source, registries) -> {
+            if (key.getValue().equals(Identifier.ofVanilla("entities/creeper"))) {
+                System.out.println("Aw man");
+                LootPool.Builder pool = LootPool.builder()
+                        .with(ItemEntry.builder(ItemRegister.splat_music_disc))
+                        .conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.create().type(EntityRegister.TOMATO_GOLEM_ENTITY_TYPE).build())
+                        );
+                tableBuilder.pool(pool);
+            }
+        }));
 
     }
 
